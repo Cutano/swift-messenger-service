@@ -9,4 +9,10 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
+
+    <select id="userLogin" parameterType="team.cutano.swiftmessengerservice.pojo.User" resultType="hashmap">
+        SELECT password
+        FROM User
+        WHERE userID = #{userID}
+    </select>
 </mapper>

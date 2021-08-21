@@ -7,9 +7,4 @@
         FROM User
         WHERE userID = #{userID}
     </select>
-
-    <insert id="userRegister">
-        INSERT INTO User (userName, password, avatar)
-        VALUES (#{username}, #{password}, #{userAvatar})
-    </insert>
 </mapper>
