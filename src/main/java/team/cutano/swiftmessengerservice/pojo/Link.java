@@ -1,27 +1,27 @@
 package team.cutano.swiftmessengerservice.pojo;
 
 public class Link {
-    private Long userID;
-    private Long sessionID;
+    private Integer userID;
+    private Integer sessionID;
 
-    public Link(Long userID, Long sessionID) {
+    public Link(Integer userID, Integer sessionID) {
         this.userID = userID;
         this.sessionID = sessionID;
     }
 
-    public Long getUserID() {
+    public Integer getUserID() {
         return userID;
     }
 
-    public void setUserID(Long userID) {
+    public void setUserID(Integer userID) {
         this.userID = userID;
     }
 
-    public Long getSessionID() {
+    public Integer getSessionID() {
         return sessionID;
     }
 
-    public void setSessionID(Long sessionID) {
+    public void setSessionID(Integer sessionID) {
         this.sessionID = sessionID;
     }
 }

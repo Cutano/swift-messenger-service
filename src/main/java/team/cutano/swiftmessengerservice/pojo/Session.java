@@ -1,21 +1,21 @@
 package team.cutano.swiftmessengerservice.pojo;
 
 public class Session {
-    private Long sessionID;
+    private Integer sessionID;
     private String recentMsg;
     private String recentMsgTimeStamp;
 
-    public Session(Long sessionID, String recentMsg, String recentMsgTimeStamp) {
+    public Session(Integer sessionID, String recentMsg, String recentMsgTimeStamp) {
         this.sessionID = sessionID;
         this.recentMsg = recentMsg;
         this.recentMsgTimeStamp = recentMsgTimeStamp;
     }
 
-    public Long getSessionID() {
+    public Integer getSessionID() {
         return sessionID;
     }
 
-    public void setSessionID(Long sessionID) {
+    public void setSessionID(Integer sessionID) {
         this.sessionID = sessionID;
     }
 

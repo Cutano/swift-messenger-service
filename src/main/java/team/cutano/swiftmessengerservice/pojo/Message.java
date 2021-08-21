@@ -1,15 +1,15 @@
 package team.cutano.swiftmessengerservice.pojo;
 
 public class Message {
-    private Long msgID;
-    private Long senderID;
-    private Long receiverID;
+    private Integer msgID;
+    private Integer senderID;
+    private Integer receiverID;
     private String timeStamp;
-    private Long sessionID;
+    private Integer sessionID;
     private Boolean hasRead;
     private String text;
 
-    public Message(Long msgID, Long senderID, Long receiverID, String timeStamp, Long sessionID, Boolean hasRead, String text) {
+    public Message(Integer msgID, Integer senderID, Integer receiverID, String timeStamp, Integer sessionID, Boolean hasRead, String text) {
         this.msgID = msgID;
         this.senderID = senderID;
         this.receiverID = receiverID;
@@ -19,27 +19,27 @@ public class Message {
         this.text = text;
     }
 
-    public Long getMsgID() {
+    public Integer getMsgID() {
         return msgID;
     }
 
-    public void setMsgID(Long msgID) {
+    public void setMsgID(Integer msgID) {
         this.msgID = msgID;
     }
 
-    public Long getSenderID() {
+    public Integer getSenderID() {
         return senderID;
     }
 
-    public void setSenderID(Long senderID) {
+    public void setSenderID(Integer senderID) {
         this.senderID = senderID;
     }
 
-    public Long getReceiverID() {
+    public Integer getReceiverID() {
         return receiverID;
     }
 
-    public void setReceiverID(Long receiverID) {
+    public void setReceiverID(Integer receiverID) {
         this.receiverID = receiverID;
     }
 
@@ -51,11 +51,11 @@ public class Message {
         this.timeStamp = timeStamp;
     }
 
-    public Long getSessionID() {
+    public Integer getSessionID() {
         return sessionID;
     }
 
-    public void setSessionID(Long sessionID) {
+    public void setSessionID(Integer sessionID) {
         this.sessionID = sessionID;
     }
 
