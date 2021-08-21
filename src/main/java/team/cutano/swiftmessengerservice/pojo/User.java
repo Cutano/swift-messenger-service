@@ -3,13 +3,13 @@ package team.cutano.swiftmessengerservice.pojo;
 public class User {
     private Integer userID;
     private String username;
-    private String avatar;
+    private String userAvatar;
     private String password;
 
-    public User(Integer userID, String username, String avatar, String password) {
+    public User(Integer userID, String username, String userAvatar, String password) {
         this.userID = userID;
         this.username = username;
-        this.avatar = avatar;
+        this.userAvatar = userAvatar;
         this.password = password;
     }
 
@@ -29,12 +29,12 @@ public class User {
         this.username = username;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getUserAvatar() {
+        return userAvatar;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
     }
 
     public String getPassword() {

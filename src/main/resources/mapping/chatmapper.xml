@@ -3,7 +3,13 @@
 <mapper namespace="team.cutano.swiftmessengerservice.mapper.ChatMapper">
 
     <select id="userInfo" parameterType="java.lang.Integer" resultType="hashmap">
-        SELECT * FROM User WHERE userID = #{userID}
+        SELECT *
+        FROM User
+        WHERE userID = #{userID}
     </select>
 
+    <insert id="userRegister">
+        INSERT INTO User (userName, password, avatar)
+        VALUES (#{username}, #{password}, #{userAvatar})
+    </insert>
 </mapper>
