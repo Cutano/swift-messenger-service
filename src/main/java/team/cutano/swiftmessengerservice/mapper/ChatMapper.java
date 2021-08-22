@@ -1,6 +1,7 @@
 package team.cutano.swiftmessengerservice.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import team.cutano.swiftmessengerservice.pojo.Message;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,4 +10,5 @@ import java.util.List;
 public interface ChatMapper {
     HashMap<String, Object> userInfo(Integer userID);
     List<HashMap<String, Object>> friendList(Integer userID);
+    List<Message> conversationHistoryMsg(Integer userID, Integer friendID);
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.bind.annotation.*;
 import team.cutano.swiftmessengerservice.json.*;
 import team.cutano.swiftmessengerservice.mapper.ChatMapper;
+import team.cutano.swiftmessengerservice.pojo.Message;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -65,4 +66,35 @@ public class ChatController {
         }
     }
 
+    @PostMapping("/conv-his-msg")
+    public String conversationHistoryMsg(@RequestBody Map<String, Object> body) {
+        Integer userID = (Integer) body.get("userID");
+        Integer friendID = (Integer) body.get("friendID");
+        List<Message> msgDataList = chatMapper.conversationHistoryMsg(userID, friendID);
+        List<team.cutano.swiftmessengerservice.json.Message> msgs = new ArrayList<>();
+
+        for (Message msgData : msgDataList) {
+            team.cutano.swiftmessengerservice.json.Message msg = new team.cutano.swiftmessengerservice.json.Message();
+            msg.setMsgID(msgData.getMsgID().longValue());
+            msg.setSenderID(msgData.getSenderID().longValue());
+            msg.setReceiverID(msgData.getReceiverID().longValue());
+            msg.setTimeStamp(Long.valueOf(msgData.getTimeStamp()));
+            msg.setHasRead(msgData.getHasRead());
+            msg.setText(msgData.getText());
+            msgs.add(msg);
+        }
+
+        ConversationHistoryMsg conversationHistoryMsg = new ConversationHistoryMsg();
+        ConversationHistoryMsgData conversationHistoryMsgData = new ConversationHistoryMsgData();
+        conversationHistoryMsgData.setTime(System.currentTimeMillis());
+        conversationHistoryMsgData.setMessages(msgs);
+        conversationHistoryMsg.setResult("success");
+        conversationHistoryMsg.setData(conversationHistoryMsgData);
+        try {
+            return Converter.ConversationHistoryMsgToJsonString(conversationHistoryMsg);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "{\"result\": \"error\"}";
+        }
+    }
 }
