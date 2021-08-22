@@ -13,4 +13,7 @@ public interface ChatMapper {
     List<Message> conversationHistoryMsg(Integer userID, Integer friendID);
     Integer addFriend(Integer userID, Integer friendID);
     Integer clearUnread(Integer userID, Integer friendID);
+    Integer newMsg(Message msg);
+    Integer getSessionID(Integer userID, Integer friendID);
+    Integer setRecentMsg(Message msg);
 }

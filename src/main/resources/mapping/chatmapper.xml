@@ -42,4 +42,25 @@
         WHERE message.senderID = #{friendID}
           AND message.receiverID = #{userID};
     </update>
+
+    <select id="getSessionID" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT sessionID
+        FROM friendview
+        WHERE userID = #{userID}
+          AND friendID = #{friendID};
+    </select>
+
+    <insert id="newMsg" parameterType="team.cutano.swiftmessengerservice.pojo.Message">
+        INSERT INTO message (senderID, receiverID, timeStamp, sessionID, hasRead, text)
+        VALUES (#{senderID}, #{receiverID}, #{timeStamp}, #{sessionID}, #{hasRead}, #{text});
+        <selectKey resultType="java.lang.Integer" keyProperty="msgID" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <update id="setRecentMsg" parameterType="team.cutano.swiftmessengerservice.pojo.Message">
+        UPDATE `session`
+        SET recentMsg=#{text}, recentMsgTimeStamp=#{timeStamp}
+        WHERE `session`.sessionID=#{sessionID}
+    </update>
 </mapper>

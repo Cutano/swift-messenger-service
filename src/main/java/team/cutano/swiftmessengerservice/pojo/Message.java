@@ -19,6 +19,15 @@ public class Message {
         this.text = text;
     }
 
+    public Message(Integer senderID, Integer receiverID, String timeStamp, Integer sessionID, Boolean hasRead, String text) {
+        this.senderID = senderID;
+        this.receiverID = receiverID;
+        this.timeStamp = timeStamp;
+        this.sessionID = sessionID;
+        this.hasRead = hasRead;
+        this.text = text;
+    }
+
     public Integer getMsgID() {
         return msgID;
     }
