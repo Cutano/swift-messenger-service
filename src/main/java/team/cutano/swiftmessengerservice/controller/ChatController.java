@@ -47,8 +47,13 @@ public class ChatController {
             friend.setFriendName((String) map.get("friendName"));
             friend.setFriendAvatar((String) map.get("friendAvatar"));
             friend.setRecentMsg((String) map.get("recentMsg"));
-            friend.setRecentMsgTime(Long.valueOf((String) map.get("recentMsgTimeStamp")));
             friend.setUnreadMsgCount((Long) map.get("unreadMsgCount"));
+            if (map.get("recentMsgTimeStamp") == null) {
+                friend.setRecentMsgTime(null);
+            } else {
+                friend.setRecentMsgTime(Long.valueOf((String) map.get("recentMsgTimeStamp")));
+            }
+
             friends.add(friend);
         }
 
@@ -63,6 +68,29 @@ public class ChatController {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return "{\"result\": \"error\"}";
+        }
+    }
+
+    @PostMapping("/add-friend")
+    public String addFriend(@RequestBody Map<String, Object> body) {
+        Integer userID = (Integer) body.get("userID");
+        Integer friendID = (Integer) body.get("friendID");
+        if (userID.equals(friendID)) return "{\"result\": \"error\"}";
+
+        List<HashMap<String, Object>> maps = chatMapper.friendList(userID);
+        for (HashMap<String, Object> map : maps) {
+            if (friendID.equals((Integer) map.get("friendID"))) {
+                return "{\"result\": \"error\"}";
+            }
+        }
+
+        HashMap<String, Object> map = chatMapper.userInfo(friendID);
+        if (map == null || map.get("username") == null) return "{\"result\": \"error\"}";
+
+        Integer res = chatMapper.addFriend(userID, friendID);
+        if (res == null || res == 0) return "{\"result\": \"error\"}";
+        else {
+            return "{\"result\": \"success\"}";
         }
     }
 

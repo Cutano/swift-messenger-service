@@ -12,7 +12,7 @@
         SELECT friendview.userID,
                friendview.friendID,
                friendview.unreadMsgCount,
-               `user`.username AS friendName,
+               `user`.username   AS friendName,
                `user`.userAvatar AS friendAvatar,
                `session`.recentMsg,
                `session`.recentMsgTimeStamp
@@ -22,11 +22,17 @@
         WHERE friendview.userID = #{userID}
     </select>
 
-    <select id="conversationHistoryMsg" parameterType="java.lang.Integer" resultType="team.cutano.swiftmessengerservice.pojo.Message">
+    <select id="conversationHistoryMsg" parameterType="java.lang.Integer"
+            resultType="team.cutano.swiftmessengerservice.pojo.Message">
         SELECT *
         FROM message
         WHERE message.sessionID IN (SELECT friendview.sessionID
                                     FROM friendview
-                                    WHERE friendview.userID = #{userID} AND friendview.friendID = #{friendID})
+                                    WHERE friendview.userID = #{userID}
+                                      AND friendview.friendID = #{friendID})
     </select>
+
+    <insert id="addFriend" parameterType="java.lang.Integer">
+        CALL addFriend (#{userID}, #{friendID});
+    </insert>
 </mapper>

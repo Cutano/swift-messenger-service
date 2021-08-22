@@ -11,4 +11,5 @@ public interface ChatMapper {
     HashMap<String, Object> userInfo(Integer userID);
     List<HashMap<String, Object>> friendList(Integer userID);
     List<Message> conversationHistoryMsg(Integer userID, Integer friendID);
+    Integer addFriend(Integer userID, Integer friendID);
 }
