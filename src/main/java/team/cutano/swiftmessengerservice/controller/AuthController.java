@@ -47,7 +47,7 @@ public class AuthController {
         String password = (String) body.get("password");
         User user = new User(userID, null, null, password);
         Map<String, Object> map = authMapper.userLogin(user);
-        if (!password.equals(map.get("password"))) return "{\"result\": \"error\"}";
+        if (map.get("password") == null || !password.equals(map.get("password"))) return "{\"result\": \"error\"}";
         else return "{\"result\": \"success\"}";
     }
 }

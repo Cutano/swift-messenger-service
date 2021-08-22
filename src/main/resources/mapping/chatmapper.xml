@@ -7,4 +7,18 @@
         FROM User
         WHERE userID = #{userID}
     </select>
+
+    <select id="friendList" parameterType="java.lang.Integer" resultType="hashmap">
+        SELECT friendview.userID,
+               friendview.friendID,
+               friendview.unreadMsgCount,
+               `user`.username AS friendName,
+               `user`.userAvatar AS friendAvatar,
+               `session`.recentMsg,
+               `session`.recentMsgTimeStamp
+        FROM friendview
+                 LEFT JOIN `user` ON friendview.friendID = `user`.userID
+                 LEFT JOIN `session` ON friendview.sessionID = `session`.sessionID
+        WHERE friendview.userID = #{userID}
+    </select>
 </mapper>
