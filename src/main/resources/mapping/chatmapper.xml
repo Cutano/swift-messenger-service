@@ -35,4 +35,11 @@
     <insert id="addFriend" parameterType="java.lang.Integer">
         CALL addFriend (#{userID}, #{friendID});
     </insert>
+
+    <update id="clearUnread" parameterType="java.lang.Integer">
+        UPDATE message
+        SET hasRead=1
+        WHERE message.senderID = #{friendID}
+          AND message.receiverID = #{userID};
+    </update>
 </mapper>

@@ -12,4 +12,5 @@ public interface ChatMapper {
     List<HashMap<String, Object>> friendList(Integer userID);
     List<Message> conversationHistoryMsg(Integer userID, Integer friendID);
     Integer addFriend(Integer userID, Integer friendID);
+    Integer clearUnread(Integer userID, Integer friendID);
 }

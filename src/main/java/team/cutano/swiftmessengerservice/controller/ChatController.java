@@ -125,4 +125,13 @@ public class ChatController {
             return "{\"result\": \"error\"}";
         }
     }
+
+    @PostMapping("/cls-unread")
+    public String clearUnread(@RequestBody Map<String, Object> body) {
+        Integer userID = (Integer) body.get("userID");
+        Integer friendID = (Integer) body.get("friendID");
+        Integer res = chatMapper.clearUnread(userID, friendID);
+        if (res == null || res == 0) return "{\"result\": \"error\"}";
+        else return "{\"result\": \"success\"}";
+    }
 }
