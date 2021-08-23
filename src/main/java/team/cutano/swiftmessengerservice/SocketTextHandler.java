@@ -35,6 +35,9 @@ public class SocketTextHandler extends TextWebSocketHandler {
         switch (wsData.getType()) {
             case "userLogin": {
                 Data data = wsData.getData();
+                if (clients.containsKey(data.getUserID())) {
+                    clients.get(data.getUserID()).close();
+                }
                 clients.put(data.getUserID(), session);
                 session.sendMessage(new TextMessage(payload));
                 List<HashMap<String, Object>> maps = chatMapper.friendList(data.getUserID().intValue());
@@ -43,6 +46,15 @@ public class SocketTextHandler extends TextWebSocketHandler {
                     Long friendID = Long.valueOf((Integer) item.get("friendID"));
                     if (clients.containsKey(friendID)) {
                         clients.get(friendID).sendMessage(new TextMessage(Converter.toJsonString(wsData)));
+                    }
+                }
+
+                for (HashMap<String, Object> item : maps) {
+                    Long friendID = Long.valueOf((Integer) item.get("friendID"));
+                    if (clients.containsKey(friendID)) {
+                        data.setUserID(friendID);
+                        wsData.setData(data);
+                        session.sendMessage(new TextMessage(Converter.toJsonString(wsData)));
                     }
                 }
                 break;
@@ -92,8 +104,24 @@ public class SocketTextHandler extends TextWebSocketHandler {
         for (long key : clients.keySet()) {
             if (clients.get(key) == session) {
                 userID = key;
+                break;
             }
         }
-        if (userID != -1) clients.remove(userID);
+        if (userID != -1) {
+            WsData wsData = new WsData();
+            Data data = new Data();
+            data.setTimeStamp(System.currentTimeMillis());
+            data.setUserID(userID);
+            wsData.setData(data);
+            wsData.setType("friendLogout");
+            List<HashMap<String, Object>> maps = chatMapper.friendList((int) userID);
+            for (HashMap<String, Object> item : maps) {
+                Long friendID = Long.valueOf((Integer) item.get("friendID"));
+                if (clients.containsKey(friendID) && clients.get(friendID).isOpen()) {
+                    clients.get(friendID).sendMessage(new TextMessage(Converter.toJsonString(wsData)));
+                }
+            }
+            clients.remove(userID);
+        }
     }
 }
