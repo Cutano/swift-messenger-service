@@ -22,6 +22,7 @@ public class SocketTextHandler extends TextWebSocketHandler {
     @Resource
     private ChatMapper chatMapper;
     private final Map<Long, WebSocketSession> clients = new HashMap<>();
+    private long chatRoomMsgCnt = 0;
 
     public SocketTextHandler() {
         chatMapper = ApplicationContextHolder.getContext().getBean(ChatMapper.class);
@@ -87,8 +88,26 @@ public class SocketTextHandler extends TextWebSocketHandler {
                     if (clients.containsKey(data.getReceiverID()))
                         clients.get(data.getReceiverID()).sendMessage(new TextMessage(Converter.toJsonString(wsData)));
                 } else session.sendMessage(new TextMessage("{\"result\": \"error\"}"));
+                break;
             }
 
+            case "chatRoomMsg": {
+                chatRoomMsgCnt++;
+                Data data = wsData.getData();
+                HashMap<String, Object> map = chatMapper.userInfo(data.getSenderID().intValue());
+                data.setAvatar((String) map.get("userAvatar"));
+                data.setSenderName((String) map.get("username"));
+                data.setMsgID(chatRoomMsgCnt);
+                wsData.setData(data);
+                for (WebSocketSession s : clients.values()) {
+                    s.sendMessage(new TextMessage(Converter.toJsonString(wsData)));
+                }
+                break;
+            }
+
+            default: {
+                System.out.println("Unknown Message Type.");
+            }
         }
 
     }

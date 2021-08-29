@@ -9,6 +9,8 @@ public class Data {
     private Long receiverID;
     private Long senderID;
     private String text;
+    private String avatar;
+    private String senderName;
     private Boolean hasRead;
 
     @JsonProperty("userID")
@@ -40,6 +42,16 @@ public class Data {
     public String getText() { return text; }
     @JsonProperty("text")
     public void setText(String value) { this.text = value; }
+
+    @JsonProperty("avatar")
+    public String getAvatar() { return avatar; }
+    @JsonProperty("avatar")
+    public void setAvatar(String value) { this.avatar = value; }
+
+    @JsonProperty("senderName")
+    public String getSenderName() { return senderName; }
+    @JsonProperty("senderName")
+    public void setSenderName(String value) { this.senderName = value; }
 
     @JsonProperty("hasRead")
     public Boolean getHasRead() { return hasRead; }
